@@ -16,5 +16,9 @@ describe('Connect 4 game', function() {
     it('game has a height', function() {
       expect(connect4.height).toEqual(2);
     });
+
+    it('has a grid of a specified size', function() {
+      expect(connect4.grid).toEqual(gridMock);
+    });
   });
 });
