@@ -4,6 +4,7 @@ describe('Connect 4 game', function() {
 
   var gridMock = [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.']];
   var firstGoInColOne = [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.'], ['O', '.', '.', '.']];
+  var secondGoInColOne = [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['X', '.', '.', '.'], ['O', '.', '.', '.']];
 
   beforeEach(function() {
     connect4 = new Connect4(4, 4);
@@ -42,6 +43,34 @@ describe('Connect 4 game', function() {
     it('pieces drop to the bottom of the column', function() {
       connect4.takeTurn(1);
       expect(connect4.grid).toEqual(firstGoInColOne);
+      connect4.takeTurn(1);
+      expect(connect4.grid).toEqual(secondGoInColOne);
+    });
+
+    it('after player2 follows player1', function() {
+      connect4.takeTurn(1);
+      connect4.takeTurn(1);
+      expect(connect4.grid[2][0]).toEqual('X');
+    });
+  });
+
+  describe('switching players', function() {
+  
+    it('player 2 follows player 1', function() {
+      connect4.switchPlayer(connect4.player1);
+      expect(connect4.player).toEqual(connect4.player2);
+    });
+
+    it('player 1 follows player 2', function() {
+      connect4.switchPlayer(connect4.player2);
+      expect(connect4.player).toEqual(connect4.player1);
+    });
+  });
+
+  describe('checking for a winner', function() {
+    
+    it('a winner can be found', function() {
+      expect(connect4.checkForWinner).toBeDefined();
     });
   });
 });
