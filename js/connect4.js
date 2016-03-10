@@ -1,8 +1,8 @@
 'use strict';
 
 var Connect4 = function(width, height) {
-  this.width = width;
-  this.height = height;
+  this.width = width || 6;
+  this.height = height || 7;
   this.grid = this.initGrid();
 };
 

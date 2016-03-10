@@ -21,6 +21,16 @@ describe('Connect 4 game', function() {
     it('has a grid of a specified size', function() {
       expect(connect4.grid).toEqual(gridMock);
     });
+
+    it('the grid has a default width of 6', function() {
+      var anotherConnect4 = new Connect4();
+      expect(anotherConnect4.grid[0].length).toEqual(6);
+    });
+
+    it('the grid has a default height of 7', function() {
+      var anotherConnect4 = new Connect4();
+      expect(anotherConnect4.grid.length).toEqual(7);
+    });
   });
 
   describe('taking turns', function() {
