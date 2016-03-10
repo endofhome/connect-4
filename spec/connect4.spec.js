@@ -2,7 +2,8 @@ var Connect4 = require('../js/connect4.js');
 
 describe('Connect 4 game', function() {
 
-  var gridMock = [['.', '.'], ['.', '.']];
+  var gridMock = [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.']];
+  var firstGo = [['.', '.'], ['.', '.']];
 
   beforeEach(function() {
     connect4 = new Connect4(4, 4);
