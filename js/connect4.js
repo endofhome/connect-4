@@ -19,4 +19,14 @@ Connect4.prototype.initGrid = function() {
   return grid;
 };
 
+Connect4.prototype.takeTurn = function(columnNum) {
+  var column = columnNum-1
+  for(var i=(this.height-1); i>0; i--) {
+    if (this.grid[i][column] === '.') {
+      this.grid[i][column] = 'O'
+      break
+    };
+  };
+};
+
 module.exports = Connect4;
