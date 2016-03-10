@@ -47,10 +47,15 @@ describe('Connect 4 game', function() {
       expect(connect4.grid).toEqual(secondGoInColOne);
     });
 
-    it('after player2 follows player1', function() {
+    it('player2 follows player1', function() {
       connect4.takeTurn(1);
       connect4.takeTurn(1);
       expect(connect4.grid[2][0]).toEqual('X');
+    });
+
+    it('game remembers the last turn', function() {
+      connect4.takeTurn(1);
+      expect(connect4.lastTurnPosition).toEqual([3,0]);
     });
   });
 
@@ -71,6 +76,18 @@ describe('Connect 4 game', function() {
     
     it('a winner can be found', function() {
       expect(connect4.checkForWinner).toBeDefined();
+    });
+
+    it('can check in one direction', function() {
+      connect4.takeTurn(1);
+      connect4.takeTurn(1);
+      connect4.takeTurn(2);
+      connect4.takeTurn(1);
+      connect4.takeTurn(3);
+      expect(connect4.checkOneDirectionForWinner([-1, 0])).toEqual(false)
+      connect4.takeTurn(1);
+      connect4.takeTurn(4);
+      expect(connect4.checkOneDirectionForWinner([-1, 0])).toEqual(true)
     });
   });
 });
