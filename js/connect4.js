@@ -9,9 +9,9 @@ var Connect4 = function(width, height) {
 Connect4.prototype.initGrid = function() {
   var grid = [];
   var row = [];
-  for(var i=0; i<this.width; i++) {
+  for(var i=0; i<this.height; i++) {
     row = [];
-    for(var j=0; j<this.height; j++) {
+    for(var j=0; j<this.width; j++) {
       row.push('.');
     };
     grid.push(row);
