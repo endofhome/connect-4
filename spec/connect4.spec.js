@@ -2,9 +2,10 @@ var Connect4 = require('../js/connect4.js');
 
 describe('Connect 4 game', function() {
 
-  var gridMock = [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.']];
-  var firstGoInColOne = [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.'], ['O', '.', '.', '.']];
+  var gridMock =         [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.']];
+  var firstGoInColOne =  [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.'], ['O', '.', '.', '.']];
   var secondGoInColOne = [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['X', '.', '.', '.'], ['O', '.', '.', '.']];
+  var gridFullOfO =      [['O', 'O', 'O', 'O'], ['O', 'O', 'O', 'O'], ['O', 'O', 'O', 'O'], ['O', 'O', 'O', 'O']];
 
   beforeEach(function() {
     connect4 = new Connect4(4, 4);
@@ -72,7 +73,7 @@ describe('Connect 4 game', function() {
     });
   });
 
-  describe('checking for a winner', function() {
+  describe('simple checking for a winner', function() {
     
     it('a winner can be found', function() {
       expect(connect4.checkForWinner).toBeDefined();
@@ -89,5 +90,165 @@ describe('Connect 4 game', function() {
       connect4.takeTurn(4);
       expect(connect4.checkOneDirectionForWinner([-1, 0])).toEqual(true)
     });
+  });
+
+  describe('deeper checking for a winner when last move in bottom-left corner', function() {
+
+    beforeEach(function() {
+      connect4.grid = gridFullOfO;
+      connect4.lastTurnPosition = [3, 0];
+    });
+
+    it('can find a winner in the up direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up'])).toEqual(true);
+    });
+
+    it('can find a winner in the up-right direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up-right'])).toEqual(true);
+    });
+
+    it('can find a winner in the right direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['right'])).toEqual(true);
+    });
+
+    it('cannot move down-right so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down-right'])).toEqual(false);
+    });
+
+    it('cannot move down so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down'])).toEqual(false);
+    });
+    
+    it('cannot move down-left so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down-left'])).toEqual(false);
+    });
+
+    it('cannot move left so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['left'])).toEqual(false);
+    });
+
+    it('cannot move up-left so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up-left'])).toEqual(false);
+    });      
+  });
+
+  describe('deeper checking for a winner when last move in top-left corner', function() {
+
+    beforeEach(function() {
+      connect4.grid = gridFullOfO;
+      connect4.lastTurnPosition = [0, 0];
+    });
+
+    it('cannot move up so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up'])).toEqual(false);
+    });
+
+    it('cannot move up-right so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up-right'])).toEqual(false);
+    });
+
+    it('can find a winner in the right direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['right'])).toEqual(true);
+    });
+
+    it('can find a winner in the down-right direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down-right'])).toEqual(true);
+    });
+
+    it('can find a winner in the down direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down'])).toEqual(true);
+    });
+    
+    it('cannot move down-left so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down-left'])).toEqual(false);
+    });
+
+    it('cannot move left so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['left'])).toEqual(false);
+    });
+
+    it('cannot move up-left so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up-left'])).toEqual(false);
+    });      
+  });
+
+  describe('deeper checking for a winner when last move in top-right corner', function() {
+
+    beforeEach(function() {
+      connect4.grid = gridFullOfO;
+      connect4.lastTurnPosition = [0, 3];
+    });
+
+    it('cannot move up so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up'])).toEqual(false);
+    });
+
+    it('cannot move up-right so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up-right'])).toEqual(false);
+    });
+
+    it('cannot move right so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['right'])).toEqual(false);
+    });
+
+    it('cannot move down-right so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down-right'])).toEqual(false);
+    });
+
+    it('can find a winner in the down direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down'])).toEqual(true);
+    });
+    
+    it('can find a winner in the down-left direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down-left'])).toEqual(true);
+    });
+
+    it('can find a winner in the left direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['left'])).toEqual(true);
+    });
+
+    it('cannot move up-left so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up-left'])).toEqual(false);
+    });      
+  });
+
+  describe('deeper checking for a winner when last move in bottom-right corner', function() {
+
+    beforeEach(function() {
+      connect4.grid = gridFullOfO;
+      connect4.lastTurnPosition = [3, 3];
+    });
+
+    it('can find a winner in the up direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up'])).toEqual(true);
+    });
+
+    it('cannot move up-right so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up-right'])).toEqual(false);
+    });
+
+    it('cannot move right so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['right'])).toEqual(false);
+    });
+
+    it('cannot move down-right so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down-right'])).toEqual(false);
+    });
+
+    it('cannot move down so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down'])).toEqual(false);
+    });
+    
+    it('cannot move down-left so no winner is found', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['down-left'])).toEqual(false);
+    });
+
+    it('can find a winner in the left direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['left'])).toEqual(true);
+    });
+
+    it('can find a winner in the up-left direction', function() {    
+      expect(connect4.checkOneDirectionForWinner(connect4.directions['up-left'])).toEqual(true);
+    });      
   });
 });

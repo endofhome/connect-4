@@ -8,6 +8,16 @@ var Connect4 = function(width, height) {
   this.player2 = 'X';
   this.player = this.player1;
   this.lastTurnPosition = [0,0];
+  this.directions = {
+                   'up': [0, -1],
+                   'up-right': [+1, -1],
+                   'right': [+1, 0],
+                   'down-right': [+1, +1],
+                   'down': [0, +1],
+                   'down-left': [-1, +1],
+                   'left': [-1, 0],   
+                   'up-left': [-1, -1]
+                   };
 };
 
 Connect4.prototype.initGrid = function() {
@@ -53,14 +63,21 @@ Connect4.prototype.theOtherPlayer = function(player) {
 };
 
 Connect4.prototype.checkForWinner = function() {
+  Object.keys(directions).forEach(function(direction) {
+    if (this.checkOneDirectionForWinner(directions[direction]) === true) {
+      return true;
+    };
+  });
 };
 
 Connect4.prototype.checkOneDirectionForWinner = function(directionArray) {
   var isThereWinner = false;
   var playerToCheck = this.theOtherPlayer(),
       positionToCheck = this.lastTurnPosition;
+      // console.log('posToC: ',positionToCheck);
+      // console.log('this.lastTurnPos: ', this.lastTurnPosition);
   for (var i=0; i<4; i++) {
-    if (this.grid[positionToCheck[0]][positionToCheck[1]] === playerToCheck) {
+    if ((this.grid[positionToCheck[0]]) && (this.grid[positionToCheck[0]][positionToCheck[1]] === playerToCheck)) {
       positionToCheck[0] += directionArray[1];
       positionToCheck[1] += directionArray[0];
     } else {
