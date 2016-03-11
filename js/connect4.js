@@ -74,8 +74,6 @@ Connect4.prototype.checkOneDirectionForWinner = function(directionArray) {
   var isThereWinner = false;
   var playerToCheck = this.theOtherPlayer(),
       positionToCheck = this.lastTurnPosition;
-      // console.log('posToC: ',positionToCheck);
-      // console.log('this.lastTurnPos: ', this.lastTurnPosition);
   for (var i=0; i<4; i++) {
     if ((this.grid[positionToCheck[0]]) && (this.grid[positionToCheck[0]][positionToCheck[1]] === playerToCheck)) {
       positionToCheck[0] += directionArray[1];
